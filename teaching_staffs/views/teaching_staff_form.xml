@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <!-- Teaching Staff Form Template -->
+        <template id="teaching_staff_form" name="Teaching Staff Form">
+            <t t-call="website.layout">
+                <div class="container mt-4">
+                    <!-- Form for adding or editing staff -->
+                    <form action="/teaching_staffs/save" method="post" enctype="multipart/form-data">
+                        <!-- CSRF Token -->
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+                        <div class="form-group">
+                            <label for="teaching_staff_name">Teaching Staff Name</label>
+                            <input type="text" name="teaching_staff_name" class="form-control" id="teaching_staff_name" 
+                                t-att-value="staff.teachingStaffName if staff else ''" required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label for="teaching_subject">Teaching Subject</label>
+                            <input type="text" name="teaching_subject" class="form-control" id="teaching_subject" 
+                                t-att-value="staff.teachingSubject if staff else ''" required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile_photo">Profile Photo</label>
+                            <input type="file" name="profile_photo" class="form-control" id="profile_photo" />
+                        </div>
+                        <t t-if="staff">
+                            <input type="hidden" name="staff_id" t-att-value="staff.id" />
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </t>
+                        <t t-if="not staff">
+                            <button type="submit" class="btn btn-primary">Add Staff</button>
+                        </t>
+                    </form>
+
+                    <!-- Display existing staff -->
+                    <h3 class="mt-5">Existing Teaching Staff</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="staffs" t-as="staff">
+                                <tr>
+                                    <td><t t-esc="staff.teachingStaffName" /></td>
+                                    <td><t t-esc="staff.teachingSubject" /></td>
+                                    <td>
+                                        <a t-att-href="'/teaching_staffs/edit/' + str(staff.id)" class="btn btn-warning btn-sm">Edit</a>
+                                        <a t-att-href="'/teaching_staffs/delete/' + str(staff.id)" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,3 @@
+access_teaching_staff_user,access.teaching.staff.user,model_teaching_staffs,base.group_user,1,0,0,0
+access_teaching_staff_admin,access.teaching.staff.admin,model_teaching_staffs,base.group_system,1,1,1,1
+
