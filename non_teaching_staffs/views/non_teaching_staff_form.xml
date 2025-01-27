@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <!-- Non-Teaching Staff Form Template -->
+        <template id="non_teaching_staff_form" name="Non-Teaching Staff Form">
+            <t t-call="website.layout">
+                <div class="container mt-4">
+                    <!-- Form for adding or editing non-teaching staff -->
+                    <form action="/non_teaching_staffs/save" method="post" enctype="multipart/form-data">
+                        <!-- CSRF Token -->
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+                        <div class="form-group">
+                            <label for="non_teaching_staff_name">Non-Teaching Staff Name</label>
+                            <input type="text" name="non_teaching_staff_name" class="form-control" id="non_teaching_staff_name" 
+                                   t-att-value="staff.nonTeachingStaffName if staff else ''" required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label for="non_teaching_position">Non-Teaching Position</label>
+                            <input type="text" name="non_teaching_position" class="form-control" id="non_teaching_position" 
+                                   t-att-value="staff.nonTeachingPosition if staff else ''" required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile_photo">Profile Photo</label>
+                            <input type="file" name="profile_photo" class="form-control" id="profile_photo" widget="image"/>
+                        </div>
+                        <t t-if="staff">
+                            <input type="hidden" name="staff_id" t-att-value="staff.id" />
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </t>
+                        <t t-if="not staff">
+                            <button type="submit" class="btn btn-primary">Add Staff</button>
+                        </t>
+                    </form>
+
+                    <!-- Display existing non-teaching staff -->
+                    <h3 class="mt-5">Existing Non-Teaching Staff</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="staffs" t-as="staff">
+                                <tr>
+                                    <td><t t-esc="staff.nonTeachingStaffName" /></td>
+                                    <td><t t-esc="staff.nonTeachingPosition" /></td>
+                                    <td>
+                                        <a t-att-href="'/non_teaching_staffs/edit/' + str(staff.id)" class="btn btn-warning btn-sm">Edit</a>
+                                        <!-- Delete link that triggers the delete route -->
+                                        <a t-att-href="'/non_teaching_staffs/delete/' + str(staff.id)" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <template id="non_teaching_staff_views" name="Non-Teaching Staff View">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h2 class="my-4 text-center">Our Non-Teaching Staff</h2>
+
+                    <div class="row justify-content-center">
+                        <t t-foreach="staffs" t-as="staff">
+                            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mb-4">
+                                <div class="card">
+                                    <!-- Render the profile photo -->
+                                    <t t-if="staff.profilePhoto">
+                                        <img class="card-img-top"
+                                            t-att-src="'/web/image/' + str(staff.profilePhoto.id) + '/datas'"
+                                            alt="Profile Photo"
+                                            style="width: 100%; height: 150px; object-fit: cover;"/>
+                                    </t>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">
+                                            <t t-esc="staff.nonTeachingStaffName"/>
+                                        </h5>
+                                        <p class="card-text text-center text-primary">
+                                            <t t-esc="staff.nonTeachingPosition"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
